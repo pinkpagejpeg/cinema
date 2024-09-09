@@ -1,8 +1,8 @@
 import { FC } from "react"
 import { NavLink } from "react-router-dom"
-import { FILM_ITEM_ROUTE } from "../../app/config/consts"
+import { FILM_ITEM_ROUTE } from "../../../app/config/consts"
 
-const FilmList: FC = () => {
+export const FilmList: FC = () => {
     return (
         <div>
             Список фильмов
@@ -10,5 +10,3 @@ const FilmList: FC = () => {
         </div>
     )
 }
-
-export default FilmList

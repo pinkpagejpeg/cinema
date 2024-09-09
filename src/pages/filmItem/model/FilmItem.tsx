@@ -1,8 +1,8 @@
 import { FC } from "react"
 import { NavLink } from "react-router-dom"
-import { FILM_LIST_ROUTE } from "../../app/config/consts"
+import { FILM_LIST_ROUTE } from "../../../app/config/consts"
 
-const FilmItem: FC = () => {
+export const FilmItem: FC = () => {
     return (
         <div>
             Страница конкретного фильма
@@ -10,5 +10,3 @@ const FilmItem: FC = () => {
         </div>
     )
 }
-
-export default FilmItem

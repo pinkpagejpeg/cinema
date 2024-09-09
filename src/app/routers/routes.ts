@@ -1,7 +1,7 @@
 import { RouteObject } from "react-router-dom"
-import FilmItem from "../../pages/filmItem/FilmItem"
-import FilmList from "../../pages/filmList/FilmList"
 import { FILM_ITEM_ROUTE, FILM_LIST_ROUTE } from "../config/consts"
+import { FilmList } from "../../pages/filmList"
+import { FilmItem } from "../../pages/filmItem"
 
 export const publicRoutes: RouteObject[] = [
     {
