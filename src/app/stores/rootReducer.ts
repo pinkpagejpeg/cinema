@@ -1,9 +1,11 @@
-// import { combineReducers } from "redux"
+import { combineReducers } from "redux"
+import { filmsReducer } from "../../entities/films"
 
-// export const rootReducer = combineReducers({
-//     pagination: ,
-//     filter: ,
-//     search: ,
-// })
+export const rootReducer = combineReducers({
+    // pagination: ,
+    // filter: ,
+    // search: ,
+    films: filmsReducer
+})
 
-// export type RootState = ReturnType<typeof rootReducer>
+export type RootState = ReturnType<typeof rootReducer>
