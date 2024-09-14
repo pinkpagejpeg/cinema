@@ -5,6 +5,7 @@ import { useAppDispatch, useTypedSelector } from "../../../shared/hooks"
 import { Button, Card, Group, List, Text, Badge, Image, Container, Title, Stack, Divider } from "@mantine/core"
 import { fetchFilms, fetchFilmsError, fetchFilmsSuccess } from "../../../entities/films"
 import axios from "axios"
+import { Footer, Header } from "../../../shared/components"
 
 export const FilmList: FC = () => {
     const { films, loading, error } = useTypedSelector((state) => state.films)
@@ -36,6 +37,7 @@ export const FilmList: FC = () => {
 
     return (
         <Container>
+            <Header search={"Поиск"}/>
             <Title order={1} mt="md" mb="lg">Список фильмов</Title>
             <List>
                 {films !== null &&
@@ -45,7 +47,7 @@ export const FilmList: FC = () => {
                                 {item.poster !== undefined &&
                                     <Image
                                         src={item.poster.url}
-                                        height={260}
+                                        h={260}
                                         w={160}
                                         alt={item.name} />
                                 }
@@ -87,6 +89,7 @@ export const FilmList: FC = () => {
                     )
                 }
             </List>
+            <Footer />
         </Container>
     )
 }
