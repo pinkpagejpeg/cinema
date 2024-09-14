@@ -4,31 +4,32 @@ import { IFilm, IFilmsState } from "./types"
 const initialState: IFilmsState = {
     loading: false,
     error: null,
-    films: null
+    films: null,
+    film: null
 }
 
 const filmSlice = createSlice({
     name: 'films',
     initialState,
     reducers: {
-        fetchFilms(state) {
+        fetchLoading(state) {
             state.loading = true
-            state.error = null
-            state.films = null
         },
         fetchFilmsSuccess(state, action: PayloadAction<any>) {
             state.loading = false
-            state.error = null
             state.films = action.payload
         },
-        fetchFilmsError(state, action: PayloadAction<string>) {
+        fetchError(state, action: PayloadAction<string>) {
             state.loading = false
             state.error = action.payload
-            state.films = null
-        }
+        }, 
+        fetchFilmByIdSuccess(state, action: PayloadAction<any>) {
+            state.loading = false
+            state.film = action.payload
+        },
     }
 })
 
-export const { fetchFilms, fetchFilmsSuccess, fetchFilmsError } = filmSlice.actions;
+export const { fetchLoading, fetchFilmsSuccess, fetchError, fetchFilmByIdSuccess } = filmSlice.actions;
 
 export default filmSlice.reducer;

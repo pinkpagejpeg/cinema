@@ -1,4 +1,5 @@
 export interface IFilm {
+    id: number | null,
     name: string | null,
     enName: string | null,
     type: string | null,
@@ -7,7 +8,7 @@ export interface IFilm {
     ageRating: number | null,
     poster: IFilmPosters | null,
     shortDescription: string | null,
-    rating: IFilmRating  | null,
+    rating: IFilmRating | null,
     movieLength: number | null,
     genres: IFilmGenres[] | null,
     countries: IFilmCountries[] | null,
@@ -27,21 +28,17 @@ export interface IFilmPosters {
 export interface IFilmRating {
     kp: number | null,
     imdb: number | null,
-    tmdb: number | null,
-    filmCritics: number | null,
-    russianFilmCritics: number | null,
-    await: number | null
 }
 
-export interface IFilmGenres{
+export interface IFilmGenres {
     name: string | null,
 }
 
-export interface IFilmCountries{
+export interface IFilmCountries {
     name: string | null,
 }
 
-export interface ISeasonsInfo{
+export interface ISeasonsInfo {
     number: number | null,
     episodesCount: number | null,
 }
@@ -49,30 +46,31 @@ export interface ISeasonsInfo{
 export interface IFilmsState {
     loading: boolean,
     error: string | null,
-    films: IFilms | null
+    films: IFilms | null,
+    film: IFilm | null,
 }
 
-export enum FilmsActionTypes{
-    FETCH_FILMS = "FETCH_FILMS",
-    FETCH_FILMS_SUCCESS = "FETCH_FILMS_SUCCESS",
-    FETCH_FILMS_ERROR = "FETCH_FILMS_ERROR",
-}
+// export enum FilmsActionTypes {
+//     FETCH_FILMS = "FETCH_FILMS",
+//     FETCH_FILMS_SUCCESS = "FETCH_FILMS_SUCCESS",
+//     FETCH_FILMS_ERROR = "FETCH_FILMS_ERROR",
+// }
 
-export interface IFetchFilmsAction {
-    type: FilmsActionTypes.FETCH_FILMS
-}
+// export interface IFetchFilmsAction {
+//     type: FilmsActionTypes.FETCH_FILMS
+// }
 
-export interface IFetchFilmsSuccessAction {
-    type:  FilmsActionTypes.FETCH_FILMS_SUCCESS,
-    payload: any
-}
+// export interface IFetchFilmsSuccessAction {
+//     type: FilmsActionTypes.FETCH_FILMS_SUCCESS,
+//     payload: any
+// }
 
-export interface IFetchFilmsErrorAction {
-    type:  FilmsActionTypes.FETCH_FILMS_ERROR,
-    payload: string
-}
+// export interface IFetchFilmsErrorAction {
+//     type: FilmsActionTypes.FETCH_FILMS_ERROR,
+//     payload: string
+// }
 
-export type FilmsAction = IFetchFilmsAction | IFetchFilmsSuccessAction | IFetchFilmsErrorAction
+// export type FilmsAction = IFetchFilmsAction | IFetchFilmsSuccessAction | IFetchFilmsErrorAction
 
 
 // "persons": [

@@ -7,6 +7,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'bundle.js',
+        publicPath: '/',
     },
     resolve: {
         extensions: ['.ts', '.tsx', '.js'],
@@ -43,6 +44,7 @@ module.exports = {
         static: './dist',
         port: 7070,
         open: true,
+        historyApiFallback: true,
     },
     plugins: [
         new HtmlWebpackPlugin({

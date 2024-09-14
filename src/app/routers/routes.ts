@@ -9,7 +9,7 @@ export const publicRoutes: RouteObject[] = [
         Component: FilmList
     },
     {
-        path: FILM_ITEM_ROUTE,
+        path: FILM_ITEM_ROUTE + '/:id',
         Component: FilmItem
     }
 ]
