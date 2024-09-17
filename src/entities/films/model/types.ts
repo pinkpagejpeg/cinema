@@ -17,7 +17,11 @@ export interface IFilm {
 }
 
 export interface IFilms {
-    docs: IFilm[]
+    docs: IFilm[],
+    total: number | null,
+    limit: number | null,
+    page: number | null,
+    pages: number | null
 }
 
 export interface IFilmPosters {

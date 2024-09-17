@@ -4,11 +4,13 @@ import { FILM_ITEM_ROUTE } from "../../../app/config/consts"
 import { useAppDispatch, useTypedSelector } from "../../../shared/hooks"
 import { Button, Card, Group, List, Text, Badge, Image, Container, Title, Stack, Divider } from "@mantine/core"
 import { fetchLoading, fetchError, fetchFilmsSuccess } from "../../../entities/films"
-import axios from "axios"
 import { Footer, Header } from "../../../shared/components"
+import { PaginationComponent, setTotalPage } from "../../../features/pagination"
+import axios from "axios"
 
 export const FilmList: FC = () => {
     const { films, loading, error } = useTypedSelector((state) => state.films)
+    const { currentPage, filmsCount } = useTypedSelector((state) => state.pagination)
     const dispatch = useAppDispatch()
 
     const options = {
@@ -23,14 +25,15 @@ export const FilmList: FC = () => {
         const fetchFilmsData = async () => {
             try {
                 dispatch(fetchLoading())
-                const response = await axios.get('https://api.kinopoisk.dev/v1.4/movie?page=1&limit=10&selectFields=id&selectFields=name&selectFields=enName&selectFields=type&selectFields=year&selectFields=description&selectFields=ageRating&selectFields=poster&selectFields=shortDescription&selectFields=rating&selectFields=movieLength&selectFields=genres&selectFields=countries&notNullFields=name&notNullFields=shortDescription&notNullFields=poster.url', options)
+                const response = await axios.get(`https://api.kinopoisk.dev/v1.4/movie?page=${currentPage}&limit=${filmsCount}&selectFields=id&selectFields=name&selectFields=enName&selectFields=type&selectFields=year&selectFields=description&selectFields=ageRating&selectFields=poster&selectFields=shortDescription&selectFields=rating&selectFields=movieLength&selectFields=genres&selectFields=countries&notNullFields=name&notNullFields=shortDescription&notNullFields=poster.url`, options)
                 dispatch(fetchFilmsSuccess(response.data))
+                dispatch(setTotalPage(response.data.pages))
             } catch (error) {
-                dispatch(fetchError('При  получении информации  о фильмах произошла ошибка'))
+                dispatch(fetchError('При получении информации о фильмах произошла ошибка'))
             }
         }
         fetchFilmsData()
-    }, [])
+    }, [currentPage, filmsCount])
 
     if (loading) return <p>Загрузка...</p>
     if (error) return <p>Ошибка: {error}</p>
@@ -62,11 +65,11 @@ export const FilmList: FC = () => {
                                     </Group>
 
                                     <Group>
-                                        {item.movieLength !== null && item.movieLength !== undefined && <Text size="sm">{Math.floor(item.movieLength / 60)+" ч. " + item.movieLength % 60 +" мин."}</Text>}
+                                        {item.movieLength !== null && item.movieLength !== undefined && <Text size="sm">{Math.floor(item.movieLength / 60) + " ч. " + item.movieLength % 60 + " мин."}</Text>}
                                         {item.movieLength !== null && item.movieLength !== undefined && <Divider size="sm" orientation="vertical" />}
                                         {item.year !== null && item.year !== undefined && <Text size="sm">{item.year}</Text>}
                                         {item.year !== null && item.year !== undefined && <Divider size="sm" orientation="vertical" />}
-                                        
+
                                         <Text size="sm">
                                             {item.countries !== undefined &&
                                                 item.countries.map((country) => country.name + " ")}
@@ -88,6 +91,7 @@ export const FilmList: FC = () => {
                     )
                 }
             </List>
+            <PaginationComponent />
             <Footer />
         </Container>
     )
