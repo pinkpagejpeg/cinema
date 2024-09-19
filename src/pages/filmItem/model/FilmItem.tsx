@@ -38,7 +38,7 @@ export const FilmItem: FC = () => {
     if (error) return <p>Ошибка: {error}</p>
 
     return (
-        <Container>
+        <Container size="xl">
             {film !== null &&
                 <>
                     <Header search={"Поиск"} />
