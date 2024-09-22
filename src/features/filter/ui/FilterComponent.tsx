@@ -1,7 +1,7 @@
 import { FC, useEffect } from "react"
 import { Stack, Title } from "@mantine/core"
 import { FilterCombobox } from "./FilterCombobox"
-import { useAppDispatch, useTypedSelector } from "../../../shared/hooks"
+import { useAppDispatch, useTypedSelector } from "../../../shared/lib"
 import { setAllCountries, setCurrentAgeRating, setCurrentCountry, setCurrentYear, } from "../model"
 import axios from "axios"
 

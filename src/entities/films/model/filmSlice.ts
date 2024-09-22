@@ -2,8 +2,8 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { IFilm, IFilmsState } from "./types"
 
 const initialState: IFilmsState = {
-    loading: false,
-    error: null,
+    filmsLoading: false,
+    filmsError: null,
     films: null,
     film: null
 }
@@ -13,18 +13,18 @@ const filmSlice = createSlice({
     initialState,
     reducers: {
         fetchLoading(state) {
-            state.loading = true
+            state.filmsLoading = true
         },
         fetchFilmsSuccess(state, action: PayloadAction<any>) {
-            state.loading = false
+            state.filmsLoading = false
             state.films = action.payload
         },
         fetchError(state, action: PayloadAction<string>) {
-            state.loading = false
-            state.error = action.payload
+            state.filmsLoading = false
+            state.filmsError = action.payload
         }, 
         fetchFilmByIdSuccess(state, action: PayloadAction<any>) {
-            state.loading = false
+            state.filmsLoading = false
             state.film = action.payload
         },
     }

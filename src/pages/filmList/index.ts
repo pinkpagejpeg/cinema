@@ -1,1 +1,1 @@
-export {FilmList} from "./model/FilmList"
+export { FilmList } from "./ui"

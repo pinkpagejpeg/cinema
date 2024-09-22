@@ -1,5 +1,5 @@
 import { RouteObject } from "react-router-dom"
-import { FILM_ITEM_ROUTE, FILM_LIST_ROUTE } from "../config/consts"
+import { FILM_ITEM_ROUTE, FILM_LIST_ROUTE } from "../../shared/config"
 import { FilmList } from "../../pages/filmList"
 import { FilmItem } from "../../pages/filmItem"
 

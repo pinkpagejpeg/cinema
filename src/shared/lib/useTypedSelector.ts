@@ -1,4 +1,4 @@
 import { useSelector } from "react-redux"
-import { RootState } from "../../app/stores"
+import { RootState } from "./types"
 
 export const useTypedSelector = useSelector.withTypes<RootState>()

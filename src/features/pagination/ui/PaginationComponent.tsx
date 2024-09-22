@@ -1,6 +1,6 @@
 import { FC, useState } from 'react'
 import { Group, Pagination, Stack, Text, Input } from '@mantine/core'
-import { useAppDispatch, useTypedSelector } from '../../../shared/hooks'
+import { useAppDispatch, useTypedSelector } from '../../../shared/lib'
 import { setCurrentPage, setFilmsCount } from '../model'
 
 export const PaginationComponent: FC = () => {

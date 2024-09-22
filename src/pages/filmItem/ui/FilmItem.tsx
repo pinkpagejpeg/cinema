@@ -1,15 +1,15 @@
 import { FC, useEffect } from "react"
-import { NavLink, useParams } from "react-router-dom"
-import { FILM_LIST_ROUTE } from "../../../app/config/consts"
-import { Badge, Container, Group, Title, Image, Stack, Text, Divider } from "@mantine/core"
-import { useAppDispatch, useTypedSelector } from "../../../shared/hooks"
-import { Footer, Header } from "../../../shared/components"
+import { useParams } from "react-router-dom"
+import { Badge, Container, Group, Title, Image, Stack, Text } from "@mantine/core"
+import { useAppDispatch, useTypedSelector } from "../../../shared/lib"
+import { Footer, Header } from "../../../shared/ui"
 import { fetchLoading, fetchError, fetchFilmByIdSuccess, IFilm } from "../../../entities/films"
 import axios from "axios"
+import { SearchComponent } from "../../../features/search"
 
 export const FilmItem: FC = () => {
     const { id } = useParams()
-    const { film, loading, error } = useTypedSelector((state) => state.films)
+    const { film, filmsLoading, filmsError } = useTypedSelector((state) => state.films)
     const dispatch = useAppDispatch()
 
     const options = {
@@ -34,14 +34,14 @@ export const FilmItem: FC = () => {
         fetchFilmData()
     }, [id])
 
-    if (loading) return <p>Загрузка...</p>
-    if (error) return <p>Ошибка: {error}</p>
+    if (filmsLoading) return <p>Загрузка...</p>
+    if (filmsError) return <p>Ошибка: {filmsError}</p>
 
     return (
         <Container size="xl">
             {film !== null &&
                 <>
-                    <Header search={"Поиск"} />
+                    <Header search={() => <SearchComponent />} />
                     <Group justify="space-between" gap="xl" align="flex-start" grow preventGrowOverflow={false} wrap="nowrap">
                         {film.poster !== undefined &&
                             <Image

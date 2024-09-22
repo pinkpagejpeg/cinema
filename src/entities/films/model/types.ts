@@ -48,8 +48,8 @@ export interface ISeasonsInfo {
 }
 
 export interface IFilmsState {
-    loading: boolean,
-    error: string | null,
+    filmsLoading: boolean,
+    filmsError: string | null,
     films: IFilms | null,
     film: IFilm | null,
 }
