@@ -15,5 +15,5 @@ export const Footer: FC = () => {
             </Group>
             <Text size="sm" c="dimmed">&copy;Кино все права защищены {new Date().getFullYear()}г.</Text>
         </Group>
-    );
+    )
 }

@@ -15,5 +15,5 @@ export const Header: FC<{ search: () => JSX.Element }> = ({ search }) => {
             </Group>
             {search()}
         </Group>
-    );
+    )
 }

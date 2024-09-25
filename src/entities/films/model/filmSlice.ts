@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { IFilm, IFilmsState } from "./types"
+import { IFilmsState } from "./types"
 
 const initialState: IFilmsState = {
     filmsLoading: false,
@@ -22,7 +22,7 @@ const filmSlice = createSlice({
         fetchError(state, action: PayloadAction<string>) {
             state.filmsLoading = false
             state.filmsError = action.payload
-        }, 
+        },
         fetchFilmByIdSuccess(state, action: PayloadAction<any>) {
             state.filmsLoading = false
             state.film = action.payload
@@ -30,6 +30,6 @@ const filmSlice = createSlice({
     }
 })
 
-export const { fetchLoading, fetchFilmsSuccess, fetchError, fetchFilmByIdSuccess } = filmSlice.actions;
+export const { fetchLoading, fetchFilmsSuccess, fetchError, fetchFilmByIdSuccess } = filmSlice.actions
 
-export default filmSlice.reducer;
+export default filmSlice.reducer

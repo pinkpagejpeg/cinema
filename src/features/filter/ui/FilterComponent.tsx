@@ -44,5 +44,5 @@ export const FilterComponent: FC = () => {
                 <FilterCombobox comboboxOptions={allAgeRatings} currentValue={currentAgeRating} setFilter={(option) => dispatch(setCurrentAgeRating(option))} />
             </Stack>
         </Stack>
-    );
+    )
 }

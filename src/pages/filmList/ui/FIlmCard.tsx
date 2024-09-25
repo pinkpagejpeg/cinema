@@ -48,5 +48,5 @@ export const FilmCard: FC<any> = ({ item }) => {
                 </Stack>
             </Group>
         </Card>
-    );
+    )
 }

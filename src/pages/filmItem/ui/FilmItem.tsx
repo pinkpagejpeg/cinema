@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom"
 import { Badge, Container, Group, Title, Image, Stack, Text } from "@mantine/core"
 import { useAppDispatch, useTypedSelector } from "../../../shared/lib"
 import { Footer, Header } from "../../../shared/ui"
-import { fetchLoading, fetchError, fetchFilmByIdSuccess, IFilm } from "../../../entities/films"
+import { fetchLoading, fetchError, fetchFilmByIdSuccess } from "../../../entities/films"
 import axios from "axios"
 import { SearchComponent } from "../../../features/search"
 

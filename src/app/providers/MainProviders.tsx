@@ -10,5 +10,5 @@ export const MainProviders = ({ children }) => {
                 {children}
             </MantineProvider>
         </Provider>
-    );
+    )
 }

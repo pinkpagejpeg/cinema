@@ -31,8 +31,6 @@ export const SearchComponent: FC = () => {
         }
     }
 
-
-
     return (
         <Group justify="center" align="center" gap="xs">
             <TextInput

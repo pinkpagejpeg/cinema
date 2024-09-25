@@ -60,5 +60,5 @@ export const PaginationComponent: FC = () => {
                 <Text size="sm">{getFilmWord(inputInfo)} на странице</Text>
             </Group>
         </Stack>
-    );
+    )
 }
