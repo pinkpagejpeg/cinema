@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 const initialState = {
-    searchLoading: false,
-    searchError: null,
+    loading: false,
+    error: null,
     searchResults: null,
     searchQuery: null
 }
@@ -12,16 +12,16 @@ const searchSlice = createSlice({
     initialState,
     reducers: {
         searchLoading(state, action: PayloadAction<string>) {
-            state.searchLoading = true
+            state.loading = true
             state.searchQuery = action.payload
         },
         searchFilmsSuccess(state, action: PayloadAction<any>) {
-            state.searchLoading = false
+            state.loading = false
             state.searchResults = action.payload
         },
         searchError(state, action: PayloadAction<string>) {
-            state.searchLoading = false
-            state.searchError = action.payload
+            state.loading = false
+            state.error = action.payload
         }
     }
 })

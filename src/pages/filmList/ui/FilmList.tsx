@@ -6,14 +6,13 @@ import { Footer, Header } from "../../../shared/ui"
 import { PaginationComponent, setTotalPage } from "../../../features/pagination"
 import { FilterComponent } from "../../../features/filter"
 import { SearchComponent } from "../../../features/search"
-import { FilmCard } from "./FIlmCard"
+import { FilmCard } from "../../../shared/ui"
 import axios from "axios"
 
 export const FilmList: FC = () => {
     const { films, filmsLoading, filmsError } = useTypedSelector((state) => state.films)
     const { currentPage, filmsCount } = useTypedSelector((state) => state.pagination)
     const { currentCountry, currentYear, currentAgeRating } = useTypedSelector((state) => state.filter)
-    const { searchLoading, searchError, searchResults, searchQuery } = useTypedSelector((state) => state.search)
     const dispatch = useAppDispatch()
 
     const options = {
@@ -46,8 +45,8 @@ export const FilmList: FC = () => {
         fetchFilmsData()
     }, [currentPage, filmsCount, currentYear, currentAgeRating, currentCountry])
 
-    if (filmsLoading || searchLoading) return <p>Загрузка...</p>
-    if (filmsError || searchError) return <p>Ошибка: {filmsError || searchError}</p>
+    if (filmsLoading) return <p>Загрузка...</p>
+    if (filmsError) return <p>Ошибка: {filmsError}</p>
 
     return (
         <Container size="xl">
@@ -55,15 +54,12 @@ export const FilmList: FC = () => {
             <Group gap="xl" wrap="nowrap" align="flex-start">
                 <FilterComponent />
                 <Stack gap="xs">
-                    <Title order={1} mt="md" mb="lg">{searchQuery !== null ? `Результат поиска по запросу "${searchQuery}"` : "Список фильмов"}</Title>
+                    <Title order={1} mt="md" mb="lg">Список фильмов</Title>
                     <List>
-                        {searchResults !== null ?
-                            searchResults.docs.map((item) =>
+                        {films !== null &&
+                            films.docs.map((item) =>
                                 <FilmCard item={item} />
                             )
-                            : films !== null ? films.docs.map((item) =>
-                                <FilmCard item={item} />
-                            ): ""
                         }
                     </List>
                     <PaginationComponent />

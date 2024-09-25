@@ -3,10 +3,13 @@ import { Button, Group, TextInput } from "@mantine/core"
 import { useAppDispatch } from "../../../shared/lib"
 import { searchError, searchFilmsSuccess, searchLoading } from "../model"
 import axios from "axios"
+import { useNavigate } from "react-router-dom"
+import { FILM_SEARCH_ROUTE } from "../../../shared/config"
 
 export const SearchComponent: FC = () => {
     const [query, setQuery] = useState<string>("")
     const dispatch = useAppDispatch()
+    const navigate = useNavigate()
 
     const options = {
         method: 'GET',
@@ -26,6 +29,7 @@ export const SearchComponent: FC = () => {
             )
 
             dispatch(searchFilmsSuccess(response.data))
+            navigate(`${FILM_SEARCH_ROUTE}?query=${encodeURIComponent(query)}`)
         } catch (error) {
             dispatch(searchError('При поиске фильмов произошла ошибка'))
         }

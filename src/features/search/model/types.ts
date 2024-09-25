@@ -1,8 +1,8 @@
 import { IFilms, IFilm } from "../../../entities/films"
 
 export interface ISearchState {
-    searchLoading: boolean,
-    searchError: string | null,
+    loading: boolean,
+    error: string | null,
     searchResults: IFilms | null,
     searchQuery: string | null
 }

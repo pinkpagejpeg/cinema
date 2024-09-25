@@ -1,7 +1,8 @@
 import { FC } from "react"
 import { NavLink } from "react-router-dom"
 import { Badge, Card, Group, Image, Stack, Text, Divider, Button, Title } from "@mantine/core"
-import { FILM_ITEM_ROUTE } from "../../../shared/config";
+import { FILM_ITEM_ROUTE } from "../../config"
+import noPhoto from "../../assets/images/no_photo.svg"
 
 export const FilmCard: FC<any> = ({ item }) => {
     return (
@@ -9,7 +10,7 @@ export const FilmCard: FC<any> = ({ item }) => {
             <Group justify="space-between" align="flex-start" grow preventGrowOverflow={false} wrap="nowrap">
                 {item.poster !== undefined &&
                     <Image
-                        src={item.poster.url}
+                        src={item.poster.url || noPhoto}
                         h={260}
                         w={160}
                         alt={item.name}
@@ -25,8 +26,11 @@ export const FilmCard: FC<any> = ({ item }) => {
                     </Group>
 
                     <Group>
-                        {item.movieLength !== null && item.movieLength !== undefined && <Text size="sm">{Math.floor(item.movieLength / 60) + " ч. " + item.movieLength % 60 + " мин."}</Text>}
-                        {item.movieLength !== null && item.movieLength !== undefined && <Divider size="sm" orientation="vertical" />}
+                        {item.movieLength !== null && item.movieLength !== undefined && item.movieLength !== 0 &&
+                            <Text size="sm"> {item.movieLength >= 60
+                                ? `${Math.floor(item.movieLength / 60)} ч. ${item.movieLength % 60} мин.`
+                                : `${item.movieLength} мин.`}</Text>}
+                        {item.movieLength !== null && item.movieLength !== undefined && item.movieLength !== 0 && <Divider size="sm" orientation="vertical" />}
                         {item.year !== null && item.year !== undefined && <Text size="sm">{item.year}</Text>}
                         {item.year !== null && item.year !== undefined && <Divider size="sm" orientation="vertical" />}
 

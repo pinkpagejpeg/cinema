@@ -1,1 +1,1 @@
-export { FILM_LIST_ROUTE, FILM_ITEM_ROUTE } from "./consts"
+export { FILM_LIST_ROUTE, FILM_ITEM_ROUTE, FILM_SEARCH_ROUTE } from "./consts"
