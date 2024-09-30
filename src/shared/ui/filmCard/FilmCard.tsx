@@ -6,7 +6,7 @@ import noPhoto from "../../assets/images/no_photo.svg"
 
 export const FilmCard: FC<any> = ({ item }) => {
     return (
-        <Card key={item.id} shadow="sm" padding="lg" radius="md" withBorder mb="lg">
+        <Card shadow="sm" padding="lg" radius="md" withBorder mb="lg">
             <Group justify="space-between" align="flex-start" grow preventGrowOverflow={false} wrap="nowrap">
                 {item.poster !== undefined &&
                     <Image

@@ -1,63 +1,90 @@
 import { FC, useState } from 'react'
 import { Group, Pagination, Stack, Text, Input } from '@mantine/core'
 import { useAppDispatch, useTypedSelector } from '../../../shared/lib'
-import { setCurrentPage, setFilmsCount } from '../model'
+import { setFilmsCurrentPage, setFilmsCount, setActorsCurrentPage, setActorsCount } from '../model'
 
-export const PaginationComponent: FC = () => {
-    const { currentPage, totalPage, filmsCount } = useTypedSelector((state) => state.pagination)
+export const PaginationComponent: FC<any> = ({ type }) => {
+    const { filmsCurrentPage, filmsTotalPage, filmsCount, actorsCurrentPage, actorsTotalPage, actorsCount } = useTypedSelector((state) => state.pagination)
     const dispatch = useAppDispatch()
-    const [inputInfo, setInputInfo] = useState(filmsCount)
+    const [count, setCount] = useState(type === "films" ? filmsCount : actorsCount)
+    const [total, setTotal] = useState(type === "films" ? filmsTotalPage : actorsTotalPage)
+    const [current, setCurrent] = useState(type === "films" ? filmsCurrentPage : actorsCurrentPage)
 
-    const changeFilmsCount = () => {
-        let updatedCount = inputInfo
+    const changeCount = () => {
+        let updatedCount = count
         if (updatedCount <= 0) {
             updatedCount = 1
         } else if (updatedCount >= 250) {
             updatedCount = 250
         }
 
-        setInputInfo(updatedCount)
-        dispatch(setFilmsCount(updatedCount))
+        setCount(updatedCount)
+        type === "films" ? dispatch(setFilmsCount(updatedCount)) : dispatch(setActorsCount(updatedCount))
     }
 
-    const getFilmWord = (count: number) => {
+    const getWord = (count: number) => {
         const lastDigit = count % 10
         const lastTwoDigits = count % 100
 
         if (lastTwoDigits >= 11 && lastTwoDigits <= 19) {
-            return 'фильмов'
+            return type === "films" ? 'фильмов' : 'актеров'
         }
 
         if (lastDigit === 1) {
-            return 'фильм'
+            return type === "films" ? 'фильм' : 'актер'
         }
 
         if (lastDigit >= 2 && lastDigit <= 4) {
-            return 'фильма'
+            return type === "films" ? 'фильма' : 'актера'
         }
 
-        return 'фильмов'
+        return type === "films" ? 'фильмов' : 'актеров'
+    }
+
+    const firstPage = () => {
+        type === "films" ? dispatch(setFilmsCurrentPage(1)) : dispatch(setActorsCurrentPage(1))
+        setCurrent(1)
+    }
+
+    const previousPage = () => {
+        type === "films" ? dispatch(setFilmsCurrentPage(current - 1)) : dispatch(setActorsCurrentPage(current - 1))
+        setCurrent(current - 1)
+    }
+
+    const nextPage = () => {
+        type === "films" ? dispatch(setFilmsCurrentPage(current + 1)) : dispatch(setActorsCurrentPage(current + 1))
+        setCurrent(current + 1)
+    }
+
+    const lastPage = () => {
+        type === "films" ? dispatch(setFilmsCurrentPage(total)) : dispatch(setActorsCurrentPage(total))
+        setCurrent(total)
+    }
+    
+    const paginationHandler = (page) => {
+        setCurrent(page)
+        type === "films" ? dispatch(setFilmsCurrentPage(page)) : dispatch(setActorsCurrentPage(page))
     }
 
     return (
         <Stack gap="xs" mb="md">
-            <Pagination.Root size="sm" total={totalPage} value={currentPage} onChange={(page) => dispatch(setCurrentPage(page))}>
+            <Pagination.Root size="sm" total={total} value={current} onChange={paginationHandler}>
                 <Group gap={5} justify="center">
-                    <Pagination.First onClick={() => dispatch(setCurrentPage(1))} />
-                    <Pagination.Previous onClick={() => dispatch(setCurrentPage(currentPage - 1))} />
+                    <Pagination.First onClick={firstPage} />
+                    <Pagination.Previous onClick={previousPage} />
                     <Pagination.Items />
-                    <Pagination.Next onClick={() => dispatch(setCurrentPage(currentPage + 1))} />
-                    <Pagination.Last onClick={() => dispatch(setCurrentPage(totalPage))} />
+                    <Pagination.Next onClick={nextPage} />
+                    <Pagination.Last onClick={lastPage} />
                 </Group>
             </Pagination.Root>
             <Group justify="center">
                 <Text size="sm">Отображать</Text>
-                <Input w="5.2%" placeholder={String(inputInfo)}
-                    value={inputInfo}
-                    onChange={(event) => setInputInfo(Number(event.target.value) || 0)}
-                    onBlur={changeFilmsCount}
+                <Input w="5.2%" placeholder={String(count)}
+                    value={count}
+                    onChange={(event) => setCount(Number(event.target.value) || 0)}
+                    onBlur={changeCount}
                     required />
-                <Text size="sm">{getFilmWord(inputInfo)} на странице</Text>
+                <Text size="sm">{getWord(count)} на странице</Text>
             </Group>
         </Stack>
     )

@@ -1,5 +1,8 @@
 export interface IPaginationState {
-    currentPage: number,
-    totalPage: number,
+    filmsCurrentPage: number,
+    filmsTotalPage: number,
     filmsCount: number,
+    actorsCurrentPage: number,
+    actorsTotalPage: number,
+    actorsCount: number,
 }

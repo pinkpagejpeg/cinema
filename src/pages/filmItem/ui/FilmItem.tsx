@@ -3,9 +3,10 @@ import { useParams } from "react-router-dom"
 import { Badge, Container, Group, Title, Image, Stack, Text } from "@mantine/core"
 import { useAppDispatch, useTypedSelector } from "../../../shared/lib"
 import { Footer, Header } from "../../../shared/ui"
-import { fetchLoading, fetchError, fetchFilmByIdSuccess } from "../../../entities/films"
-import axios from "axios"
+import { fetchFilmsLoading, fetchFilmsError, fetchFilmByIdSuccess } from "../../../entities/films"
 import { SearchComponent } from "../../../features/search"
+import { ActorsSlider } from "./ActorsSlider"
+import axios from "axios"
 
 export const FilmItem: FC = () => {
     const { id } = useParams()
@@ -23,11 +24,11 @@ export const FilmItem: FC = () => {
     useEffect(() => {
         const fetchFilmData = async () => {
             try {
-                dispatch(fetchLoading())
+                dispatch(fetchFilmsLoading())
                 const response = await axios.get(`https://api.kinopoisk.dev/v1.4/movie?page=1&limit=10&id=${id}`, options)
                 dispatch(fetchFilmByIdSuccess(response.data.docs[0]))
             } catch (error) {
-                dispatch(fetchError('При  получении информации  о фильмах произошла ошибка'))
+                dispatch(fetchFilmsError('При получении информации о фильме произошла ошибка'))
             }
         }
 
@@ -107,7 +108,10 @@ export const FilmItem: FC = () => {
                                 }
                             </Stack>
 
-                            <Title order={3}>Актеры</Title>
+                            <Stack>
+                                <Title order={3}>Актеры</Title>
+                                <ActorsSlider id={id} />
+                            </Stack>
 
                             {film.type === "tv-series" &&
                                 <Stack mb="xl">

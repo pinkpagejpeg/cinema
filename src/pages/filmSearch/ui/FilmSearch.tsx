@@ -2,7 +2,7 @@ import { FC, useEffect } from "react"
 import { useAppDispatch, useTypedSelector } from "../../../shared/lib"
 import { Group, List, Container, Title, Stack } from "@mantine/core"
 import { Footer, Header } from "../../../shared/ui"
-import { PaginationComponent, setTotalPage } from "../../../features/pagination"
+import { PaginationComponent, setFilmsCurrentPage, setFilmsTotalPage } from "../../../features/pagination"
 import { FilterComponent } from "../../../features/filter"
 import { SearchComponent, searchError, searchFilmsSuccess, searchLoading } from "../../../features/search"
 import { FilmCard } from "../../../shared/ui"
@@ -10,7 +10,7 @@ import { useSearchParams } from "react-router-dom"
 import axios from "axios"
 
 export const FilmSearch: FC = () => {
-    const { currentPage, filmsCount } = useTypedSelector((state) => state.pagination)
+    const { filmsCurrentPage, filmsCount } = useTypedSelector((state) => state.pagination)
     const { loading, error, searchResults } = useTypedSelector((state) => state.search)
     const [searchParams] = useSearchParams()
     const searchQuery = searchParams.get("query") || ""
@@ -30,10 +30,10 @@ export const FilmSearch: FC = () => {
                 dispatch(searchLoading())
                 const queryParam = searchQuery !== "" ? `&query=${searchQuery}` : ""
                 const response = await axios.get(
-                    `https://api.kinopoisk.dev/v1.4/movie/search?page=${currentPage}&limit=${filmsCount}${queryParam}`,
+                    `https://api.kinopoisk.dev/v1.4/movie/search?page=${filmsCurrentPage}&limit=${filmsCount}${queryParam}`,
                     options
                 )
-
+                // dispatch(setFilmsCurrentPage(1))
                 dispatch(searchFilmsSuccess(response.data))
             } catch (error) {
                 dispatch(searchError('При поиске фильмов произошла ошибка'))
@@ -42,7 +42,7 @@ export const FilmSearch: FC = () => {
         if (searchQuery) {
             searchFilmsData()
         }
-    }, [currentPage, filmsCount, searchQuery])
+    }, [filmsCurrentPage, filmsCount, searchQuery])
 
     if (loading) return <p>Загрузка...</p>
     if (error) return <p>Ошибка: {error}</p>
@@ -57,11 +57,11 @@ export const FilmSearch: FC = () => {
                     <List>
                         {searchResults !== null &&
                             searchResults.docs.map((item) =>
-                                <FilmCard item={item} />
+                                <FilmCard key={item.id} item={item} />
                             )
                         }
                     </List>
-                    <PaginationComponent />
+                    <PaginationComponent type="films"/>
                 </Stack>
             </Group>
             <Footer />
