@@ -7,6 +7,7 @@ import { FilterComponent } from "../../../features/filter"
 import { SearchComponent, searchError, searchFilmsSuccess, searchLoading } from "../../../features/search"
 import { FilmCard } from "../../../shared/ui"
 import { useSearchParams } from "react-router-dom"
+import { Loading } from "../../../shared/ui"
 import axios from "axios"
 
 export const FilmSearch: FC = () => {
@@ -44,7 +45,7 @@ export const FilmSearch: FC = () => {
         }
     }, [filmsCurrentPage, filmsCount, searchQuery])
 
-    if (loading) return <p>Загрузка...</p>
+    if (loading) return <Loading/>
     if (error) return <p>Ошибка: {error}</p>
 
     return (

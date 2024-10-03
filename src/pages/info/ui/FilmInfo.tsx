@@ -6,9 +6,10 @@ import { Footer, Header } from "../../../shared/ui"
 import { fetchFilmsLoading, fetchFilmsError, fetchFilmByIdSuccess } from "../../../entities/films"
 import { SearchComponent } from "../../../features/search"
 import { ActorsSlider } from "./ActorsSlider"
+import { Loading } from "../../../shared/ui"
 import axios from "axios"
 
-export const FilmItem: FC = () => {
+export const FilmInfo: FC = () => {
     const { id } = useParams()
     const { film, filmsLoading, filmsError } = useTypedSelector((state) => state.films)
     const dispatch = useAppDispatch()
@@ -35,7 +36,7 @@ export const FilmItem: FC = () => {
         fetchFilmData()
     }, [id])
 
-    if (filmsLoading) return <p>Загрузка...</p>
+    if (filmsLoading) return <Loading/>
     if (filmsError) return <p>Ошибка: {filmsError}</p>
 
     return (

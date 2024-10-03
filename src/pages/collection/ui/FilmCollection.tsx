@@ -7,9 +7,11 @@ import { PaginationComponent, setFilmsTotalPage } from "../../../features/pagina
 import { FilterComponent } from "../../../features/filter"
 import { SearchComponent } from "../../../features/search"
 import { FilmCard } from "../../../shared/ui"
+import { Loading } from "../../../shared/ui"
+import { Error } from "../../../shared/ui"
 import axios from "axios"
 
-export const FilmList: FC = () => {
+export const FilmCollection: FC = () => {
     const { films, filmsLoading, filmsError } = useTypedSelector((state) => state.films)
     const { filmsCurrentPage, filmsCount } = useTypedSelector((state) => state.pagination)
     const { currentCountry, currentYear, currentAgeRating } = useTypedSelector((state) => state.filter)
@@ -39,14 +41,14 @@ export const FilmList: FC = () => {
                 dispatch(fetchFilmsSuccess(response.data))
                 dispatch(setFilmsTotalPage(response.data.pages))
             } catch (error) {
-                dispatch(fetchFilmsError('При получении информации о фильмах произошла ошибка'))
+                dispatch(fetchFilmsError(`При получении информации о фильмах произошла ошибка: ${error}`))
             }
         }
         fetchFilmsData()
     }, [filmsCurrentPage, filmsCount, currentYear, currentAgeRating, currentCountry])
 
-    if (filmsLoading) return <p>Загрузка...</p>
-    if (filmsError) return <p>Ошибка: {filmsError}</p>
+    if (filmsLoading) return <Loading/>
+    if (filmsError) return <Error message={filmsError}/>
 
     return (
         <Container size="xl">
