@@ -41,7 +41,7 @@ export const FilmCollection: FC = () => {
                 dispatch(fetchFilmsSuccess(response.data))
                 dispatch(setFilmsTotalPage(response.data.pages))
             } catch (error) {
-                dispatch(fetchFilmsError(`При получении информации о фильмах произошла ошибка: ${error}`))
+                dispatch(fetchFilmsError(`При получении информации о фильмах произошла ошибка: ${error.message}`))
             }
         }
         fetchFilmsData()

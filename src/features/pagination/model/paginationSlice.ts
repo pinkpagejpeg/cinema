@@ -8,6 +8,9 @@ const initialState: IPaginationState = {
     actorsCurrentPage: 1,
     actorsTotalPage: 10,
     actorsCount: 10,
+    reviewsCurrentPage: 1,
+    reviewsTotalPage: 10,
+    reviewsCount: 10,
 }
 
 const paginationSlice = createSlice({
@@ -31,10 +34,21 @@ const paginationSlice = createSlice({
         },
         setActorsCount(state, action: PayloadAction<number>) {
             state.actorsCount = action.payload
+        },
+        setReviewsCurrentPage(state, action: PayloadAction<number>) {
+            state.reviewsCurrentPage = action.payload
+        },
+        setReviewsTotalPage(state, action: PayloadAction<number>) {
+            state.reviewsTotalPage = action.payload
+        },
+        setReviewsCount(state, action: PayloadAction<number>) {
+            state.reviewsCount = action.payload
         }
     }
 })
 
-export const { setFilmsCurrentPage, setFilmsTotalPage, setFilmsCount,  setActorsCurrentPage, setActorsTotalPage, setActorsCount  } = paginationSlice.actions
+export const { setFilmsCurrentPage, setFilmsTotalPage, setFilmsCount,
+    setActorsCurrentPage, setActorsTotalPage, setActorsCount,
+    setReviewsCurrentPage, setReviewsTotalPage, setReviewsCount } = paginationSlice.actions
 
 export default paginationSlice.reducer

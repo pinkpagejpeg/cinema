@@ -8,6 +8,7 @@ import { SearchComponent, searchError, searchFilmsSuccess, searchLoading } from 
 import { FilmCard } from "../../../shared/ui"
 import { useSearchParams } from "react-router-dom"
 import { Loading } from "../../../shared/ui"
+import { Error } from "../../../shared/ui"
 import axios from "axios"
 
 export const FilmSearch: FC = () => {
@@ -37,7 +38,7 @@ export const FilmSearch: FC = () => {
                 // dispatch(setFilmsCurrentPage(1))
                 dispatch(searchFilmsSuccess(response.data))
             } catch (error) {
-                dispatch(searchError('При поиске фильмов произошла ошибка'))
+                dispatch(searchError(`При поиске фильмов произошла ошибка: ${error.message}`))
             }
         }
         if (searchQuery) {
@@ -46,7 +47,7 @@ export const FilmSearch: FC = () => {
     }, [filmsCurrentPage, filmsCount, searchQuery])
 
     if (loading) return <Loading/>
-    if (error) return <p>Ошибка: {error}</p>
+    if (error) return <Error message={error}/>
 
     return (
         <Container size="xl">

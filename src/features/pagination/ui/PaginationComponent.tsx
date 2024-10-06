@@ -1,14 +1,16 @@
 import { FC, useState } from 'react'
 import { Group, Pagination, Stack, Text, Input } from '@mantine/core'
 import { useAppDispatch, useTypedSelector } from '../../../shared/lib'
-import { setFilmsCurrentPage, setFilmsCount, setActorsCurrentPage, setActorsCount } from '../model'
+import { setFilmsCurrentPage, setFilmsCount, setActorsCurrentPage, setActorsCount, setReviewsCurrentPage, setReviewsCount } from '../model'
 
 export const PaginationComponent: FC<any> = ({ type }) => {
-    const { filmsCurrentPage, filmsTotalPage, filmsCount, actorsCurrentPage, actorsTotalPage, actorsCount } = useTypedSelector((state) => state.pagination)
+    const { filmsCurrentPage, filmsTotalPage, filmsCount,
+        actorsCurrentPage, actorsTotalPage, actorsCount,
+        reviewsCurrentPage, reviewsTotalPage, reviewsCount } = useTypedSelector((state) => state.pagination)
     const dispatch = useAppDispatch()
-    const [count, setCount] = useState(type === "films" ? filmsCount : actorsCount)
-    const [total, setTotal] = useState(type === "films" ? filmsTotalPage : actorsTotalPage)
-    const [current, setCurrent] = useState(type === "films" ? filmsCurrentPage : actorsCurrentPage)
+    const [count, setCount] = useState(type === "films" ? filmsCount : type === "actors" ? actorsCount : reviewsCount)
+    const [total, setTotal] = useState(type === "films" ? filmsTotalPage : type === "actors" ? actorsTotalPage : reviewsTotalPage)
+    const [current, setCurrent] = useState(type === "films" ? filmsCurrentPage : type === "actors" ? actorsCurrentPage : reviewsCurrentPage)
 
     const changeCount = () => {
         let updatedCount = count
@@ -19,7 +21,9 @@ export const PaginationComponent: FC<any> = ({ type }) => {
         }
 
         setCount(updatedCount)
-        type === "films" ? dispatch(setFilmsCount(updatedCount)) : dispatch(setActorsCount(updatedCount))
+        type === "films" ? dispatch(setFilmsCount(updatedCount)) :
+            type === "actors" ? dispatch(setActorsCount(updatedCount)) :
+                dispatch(setReviewsCount(updatedCount))
     }
 
     const getWord = (count: number) => {
@@ -27,43 +31,57 @@ export const PaginationComponent: FC<any> = ({ type }) => {
         const lastTwoDigits = count % 100
 
         if (lastTwoDigits >= 11 && lastTwoDigits <= 19) {
-            return type === "films" ? 'фильмов' : 'актеров'
+            return type === "films" ? 'фильмов' :
+                type === "actors" ? 'актеров' : 'отзывов'
         }
 
         if (lastDigit === 1) {
-            return type === "films" ? 'фильм' : 'актер'
+            return type === "films" ? 'фильм' :
+                type === "actors" ? 'актер' : 'отзыв'
         }
 
         if (lastDigit >= 2 && lastDigit <= 4) {
-            return type === "films" ? 'фильма' : 'актера'
+            return type === "films" ? 'фильма' :
+                type === "actors" ? 'актера' : 'отзыва'
         }
 
-        return type === "films" ? 'фильмов' : 'актеров'
+        return type === "films" ? 'фильмов' :
+            type === "actors" ? 'актеров' : 'отзывов'
     }
 
     const firstPage = () => {
-        type === "films" ? dispatch(setFilmsCurrentPage(1)) : dispatch(setActorsCurrentPage(1))
+        type === "films" ? dispatch(setFilmsCurrentPage(1)) :
+            type === "actors" ? dispatch(setActorsCurrentPage(1)) :
+                dispatch(setReviewsCurrentPage(1))
         setCurrent(1)
     }
 
     const previousPage = () => {
-        type === "films" ? dispatch(setFilmsCurrentPage(current - 1)) : dispatch(setActorsCurrentPage(current - 1))
+        type === "films" ? dispatch(setFilmsCurrentPage(current - 1)) :
+            type === "actors" ? dispatch(setActorsCurrentPage(current - 1)) :
+                dispatch(setReviewsCurrentPage(current - 1))
         setCurrent(current - 1)
     }
 
     const nextPage = () => {
-        type === "films" ? dispatch(setFilmsCurrentPage(current + 1)) : dispatch(setActorsCurrentPage(current + 1))
+        type === "films" ? dispatch(setFilmsCurrentPage(current + 1)) :
+            type === "actors" ? dispatch(setActorsCurrentPage(current + 1)) :
+                dispatch(setReviewsCurrentPage(current + 1))
         setCurrent(current + 1)
     }
 
     const lastPage = () => {
-        type === "films" ? dispatch(setFilmsCurrentPage(total)) : dispatch(setActorsCurrentPage(total))
+        type === "films" ? dispatch(setFilmsCurrentPage(total)) :
+            type === "actors" ? dispatch(setActorsCurrentPage(total)) :
+                dispatch(setReviewsCurrentPage(total))
         setCurrent(total)
     }
-    
+
     const paginationHandler = (page) => {
         setCurrent(page)
-        type === "films" ? dispatch(setFilmsCurrentPage(page)) : dispatch(setActorsCurrentPage(page))
+        type === "films" ? dispatch(setFilmsCurrentPage(page)) :
+            type === "actors" ? dispatch(setActorsCurrentPage(page)) :
+                dispatch(setReviewsCurrentPage(page))
     }
 
     return (

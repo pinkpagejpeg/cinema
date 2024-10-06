@@ -5,4 +5,7 @@ export interface IPaginationState {
     actorsCurrentPage: number,
     actorsTotalPage: number,
     actorsCount: number,
+    reviewsCurrentPage: number,
+    reviewsTotalPage: number,
+    reviewsCount: number,
 }

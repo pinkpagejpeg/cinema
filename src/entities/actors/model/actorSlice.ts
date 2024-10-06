@@ -26,4 +26,5 @@ const actorSlice = createSlice({
 })
 
 export const { fetchActorsLoading, fetchActorsSuccess, fetchActorsError } = actorSlice.actions
+
 export default actorSlice.reducer

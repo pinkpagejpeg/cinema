@@ -5,8 +5,10 @@ import { useAppDispatch, useTypedSelector } from "../../../shared/lib"
 import { Footer, Header } from "../../../shared/ui"
 import { fetchFilmsLoading, fetchFilmsError, fetchFilmByIdSuccess } from "../../../entities/films"
 import { SearchComponent } from "../../../features/search"
-import { ActorsSlider } from "./ActorsSlider"
+import { ActorSection } from "./ActorSection"
+import { ReviewSection } from "./ReviewSection"
 import { Loading } from "../../../shared/ui"
+import { Error } from "../../../shared/ui"
 import axios from "axios"
 
 export const FilmInfo: FC = () => {
@@ -29,15 +31,15 @@ export const FilmInfo: FC = () => {
                 const response = await axios.get(`https://api.kinopoisk.dev/v1.4/movie?page=1&limit=10&id=${id}`, options)
                 dispatch(fetchFilmByIdSuccess(response.data.docs[0]))
             } catch (error) {
-                dispatch(fetchFilmsError('При получении информации о фильме произошла ошибка'))
+                dispatch(fetchFilmsError(`При получении информации о фильме произошла ошибка: ${error.message}`))
             }
         }
 
         fetchFilmData()
     }, [id])
 
-    if (filmsLoading) return <Loading/>
-    if (filmsError) return <p>Ошибка: {filmsError}</p>
+    if (filmsLoading) return <Loading />
+    if (filmsError) return <Error message={filmsError} />
 
     return (
         <Container size="xl">
@@ -109,9 +111,9 @@ export const FilmInfo: FC = () => {
                                 }
                             </Stack>
 
-                            <Stack>
+                            <Stack mb="md">
                                 <Title order={3}>Актеры</Title>
-                                <ActorsSlider id={id} />
+                                <ActorSection id={id} />
                             </Stack>
 
                             {film.type === "tv-series" &&
@@ -120,7 +122,11 @@ export const FilmInfo: FC = () => {
                                 </Stack>
                             }
 
-                            <Title order={3}>Отзывы</Title>
+                            <Stack mb="md">
+                                <Title order={3}>Отзывы</Title>
+                                <ReviewSection id={id} />
+                            </Stack>
+
                             <Title order={3}>Постеры</Title>
                         </Stack>
                     </Group>

@@ -1,0 +1,1 @@
+export { fetchReviewsLoading, fetchReviewsSuccess, fetchReviewsError, reviewsReducer } from "./model"
