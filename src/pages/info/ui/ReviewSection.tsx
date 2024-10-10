@@ -42,14 +42,14 @@ export const ReviewSection: FC<any> = ({ id }) => {
         <Stack>
             {reviewsLoading !== false ? <Text c="dimmed">Загрузка информации об отзывах...</Text> :
                 reviewsError !== null ? <Text c="dimmed">При получении информации об отзывах произошла ошибка</Text> :
-                    reviews !== null ?
+                    reviews !== null && reviews.total !== 0 ?
                         <Stack>
                             {reviews.docs.map(item =>
                                 <ReviewCard key={item.id} item={item} />
                             )}
                             <PaginationComponent type="reviews" />
                         </Stack>
-                        : <Text c="dimmed">Информация об актерах отсутствует</Text>
+                        : <Text c="dimmed">Информация об отзывах отсутствует</Text>
             }
         </Stack>
     )

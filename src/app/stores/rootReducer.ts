@@ -5,6 +5,7 @@ import { filterReducer } from "../../features/filter"
 import { searchReducer } from "../../features/search"
 import { actorsReducer } from "../../entities/actors"
 import { reviewsReducer } from "../../entities/reviews"
+import { imagesReducer } from "../../entities/images"
 
 export const rootReducer = combineReducers({
     pagination: paginationReducer,
@@ -12,5 +13,6 @@ export const rootReducer = combineReducers({
     search: searchReducer,
     films: filmsReducer,
     actors: actorsReducer,
-    reviews: reviewsReducer
+    reviews: reviewsReducer,
+    images: imagesReducer
 })

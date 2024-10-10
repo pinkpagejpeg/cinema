@@ -42,7 +42,7 @@ export const ActorSection: FC<any> = ({ id }) => {
         <Stack>
             {actorsLoading !== false ? <Text c="dimmed">Загрузка информации об актерах...</Text> :
                 actorsError !== null ? <Text c="dimmed">При получении информации об актерах произошла ошибка</Text> :
-                    actors !== null ?
+                    actors !== null && actors.total !== 0 ?
                         <>
                             <Grid>
                                 <Grid.Col span={6}>
